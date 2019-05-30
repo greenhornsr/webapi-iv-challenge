@@ -2,13 +2,13 @@ const express = require('express');
 
 const userRouter = require('./users/userRouter');
 
-
 const server = express();
 
-server.use('/api/users', logger, userRouter);
+server.use('/api/users', express.json(), logger, userRouter);
 
 server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`)
+  const messageOfTheDay = process.env.MOTD || "Hello devs!";
+  res.status(200).json({ messageOfTheDay })
 });
 
 //custom middleware
